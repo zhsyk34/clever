@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dnk.clever.door.dao.BuildDao">
+
+	<sql id="entity">build</sql>
+
+	<sql id="id">id</sql>
+
+	<sql id="column">id, name, createTime, updateTime</sql>
+
+	<insert id="save">
+		INSERT INTO
+		<include refid="entity"/>
+		(name)
+		VALUES
+		(#{name})
+	</insert>
+
+	<insert id="saves">
+		INSERT INTO
+		<include refid="entity"/>
+		(name)
+		VALUES
+		<foreach collection="list" item="entity" separator=",">
+			(#{entity.name})
+		</foreach>
+	</insert>
+
+	<delete id="deleteById">
+		DELETE FROM
+		<include refid="entity"/>
+		WHERE
+		<include refid="id"/>
+		= #{id}
+	</delete>
+
+	<delete id="deleteByEntity">
+		DELETE FROM
+		<include refid="entity"/>
+		WHERE
+		<include refid="id"/>
+		= #{id}
+	</delete>
+
+	<delete id="deleteByIds">
+		DELETE FROM
+		<include refid="entity"/>
+		WHERE id IN
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByEntities">
+		DELETE FROM
+		<include refid="entity"/>
+		WHERE id IN
+		<foreach collection="list" item="entity" open="(" separator="," close=")">
+			#{entity.id}
+		</foreach>
+	</delete>
+
+	<update id="update">
+		UPDATE
+		<include refid="entity"/>
+		SET
+		name = #{name}, updateTime = #{updateTime}
+		WHERE
+		<include refid="id"/>
+		= #{id}
+	</update>
+
+	<select id="findById" resultType="Build">
+		SELECT * FROM
+		<include refid="entity"/>
+		WHERE
+		<include refid="id"/>
+		= #{id}
+	</select>
+
+	<select id="findAll" resultType="Build">
+		SELECT * FROM
+		<include refid="entity"/>
+		ORDER BY
+		<include refid="id"/>
+		DESC
+	</select>
+
+	<select id="findInterval" resultType="Build">
+		SELECT * FROM
+		<include refid="entity"/>
+		ORDER BY
+		<include refid="id"/>
+		DESC
+		limit #{offset}, #{limit}
+	</select>
+
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM
+		<include refid="entity"/>
+	</select>
+</mapper>

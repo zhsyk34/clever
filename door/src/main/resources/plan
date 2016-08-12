@@ -1,0 +1,18 @@
+项目:project
+楼栋:build
+单元:unit
+房屋:house
+//房间:room
+
+门锁:lock
+house-lock 1:1
+
+网关:gateway {uuid,ip,port,remote,coordinate}
+
+gateway-lock 1:n  gateway-lock-house
+
+用户:user
+
+记录:record
+
+状态:status(lock)
