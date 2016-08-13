@@ -1,18 +1,18 @@
-项目:project
-楼栋:build
+用户:user
+
+//项目:project
+楼栋:build(id,name,code,createTime,updateTime)
 单元:unit
 房屋:house
 //房间:room
 
-门锁:lock
-house-lock 1:1
+门锁:lock(id,houseId,name)
+网关:gateway(id,unitId,uuid,name,coordinate/*build-unit*/,version,ip,port,remote)
 
-网关:gateway {uuid,ip,port,remote,coordinate}
+gateway-lock(id,gatewayId,lockId)==>1:n
 
-gateway-lock 1:n  gateway-lock-house
+gateway-record
 
-用户:user
+lock-record
 
-记录:record
-
-状态:status(lock)
+状态:(lock)status(id,lockId,type,flag);

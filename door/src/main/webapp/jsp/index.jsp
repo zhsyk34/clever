@@ -38,7 +38,7 @@
 		</div>
 	</div>
 
-	<div id="main" data-options="region:'center'">
+	<div id="main" data-options="region:'center',border:true">
 		<div id="tabs" class="easyui-tabs" data-options="border:false"/>
 	</div>
 </div>

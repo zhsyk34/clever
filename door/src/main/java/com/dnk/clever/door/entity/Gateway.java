@@ -8,25 +8,34 @@ import lombok.Setter;
 import java.util.Date;
 
 /**
- * Created by Archimedes on 2016-08-09.
+ * Created by Archimedes on 2016-08-13.
  */
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class House {
+public class Gateway {
 
 	private Integer id;
 
 	private Integer unitId;
 
+	private String uuid;
+
 	private String name;
 
-	private Integer code;
+	private String ip;
+
+	private Integer port;
+
+	private String remote;
+
+	private String version;
+
+	/*二维码*/
+	private String qr_code;
 
 	private Date createTime;
 
 	private Date updateTime;
-
 }

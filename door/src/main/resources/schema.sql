@@ -1,45 +1,96 @@
-CREATE TABLE build(
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL,
-  createTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE user (
+  id         INT         NOT NULL AUTO_INCREMENT,
+  name       VARCHAR(30) NOT NULL,
+  idCard     VARCHAR(18),
+  phone      VARCHAR(11),
+  email      VARCHAR(30),
+  gender     VARCHAR(10),
+  used       BOOLEAN,
+  createTime TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updateTime TIMESTAMP,
   PRIMARY KEY (id)
-)ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = UTF8;
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = UTF8;
 
-CREATE TABLE user(
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL,
-  createTime TIMESTAMP NOT NULL,
+CREATE TABLE build (
+  id         INT          NOT NULL AUTO_INCREMENT,
+  name       VARCHAR(30)  NOT NULL,
+  code       INT UNSIGNED NOT NULL,
+  createTime TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updateTime TIMESTAMP,
   PRIMARY KEY (id)
-)ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = UTF8;
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = UTF8;
 
-CREATE TABLE role(
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(20) NOT NULL,
+CREATE TABLE unit (
+  id         INT          NOT NULL AUTO_INCREMENT,
+  buildId    INT          NOT NULL,
+  name       VARCHAR(30)  NOT NULL,
+  code       INT UNSIGNED NOT NULL,
+  createTime TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updateTime TIMESTAMP,
   PRIMARY KEY (id)
-)ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET=UTF8;
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = UTF8;
 
-ALTER TABLE userrole ADD CONSTRAINT id PRIMARY KEY(userid, roleid);
-ALTER TABLE userrole ADD CONSTRAINT fk_uid FOREIGN KEY(userid) REFERENCES user(id);
-ALTER TABLE userrole ADD CONSTRAINT fk_rid FOREIGN KEY(roleid) REFERENCES role(id);
+CREATE TABLE house (
+  id         INT          NOT NULL AUTO_INCREMENT,
+  unitId     INT          NOT NULL,
+  name       VARCHAR(30)  NOT NULL,
+  code       INT UNSIGNED NOT NULL,
+  createTime TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updateTime TIMESTAMP,
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = UTF8;
 
-INSERT INTO user(name, age) VALUES
-('zsy',32),
-('cjj',32),
-('crg',33);
+CREATE TABLE gateway (
+  id         INT          NOT NULL AUTO_INCREMENT,
+  unitId     INT          NOT NULL,
+  uuid       VARCHAR(30)  NOT NULL,
+  name       VARCHAR(30)  NOT NULL,
+  /*coordinate VARCHAR(30) NOT NULL,*//*通过unit_id可追溯 build-unit*/
+  ip         VARCHAR(40)  NOT NULL,
+  port       INT UNSIGNED NOT NULL,
+  remote     VARCHAR(30)  NOT NULL,
+  version    VARCHAR(30),
+  qrCode     VARCHAR(50),
+  createTime TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updateTime TIMESTAMP,
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = UTF8;
 
-INSERT INTO role(name) VALUES
-('高级玩家'),
-('超级玩家'),
-('骨灰级玩家');
+CREATE TABLE locks (
+  id         INT              NOT NULL AUTO_INCREMENT,
+  houseId    INT              NOT NULL,
+  uuid       VARCHAR(30)      NOT NULL,
+  name       VARCHAR(30)      NOT NULL,
+  areaNo     TINYINT UNSIGNED NOT NULL,
+  devNo      TINYINT UNSIGNED NOT NULL,
+  createTime TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updateTime TIMESTAMP,
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = UTF8;
 
-INSERT INTO userrole(userid,roleid) VALUES
-(1,1),
-(1,3),
-(2,1),
-(2,2),
-(3,1),
-(3,2),
-(3,3);
+
+ALTER TABLE unit
+  ADD CONSTRAINT fk_build FOREIGN KEY (buildId) REFERENCES build (id);
+ALTER TABLE house
+  ADD CONSTRAINT fk_unit FOREIGN KEY (unitId) REFERENCES unit (id);
+
+
 

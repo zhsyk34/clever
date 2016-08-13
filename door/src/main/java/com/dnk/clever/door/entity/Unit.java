@@ -22,6 +22,8 @@ public class Unit {
 
 	private String name;
 
+	private Integer code;
+
 	private Date createTime;
 
 	private Date updateTime;

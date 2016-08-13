@@ -1,6 +1,5 @@
 package com.dnk.clever.door.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +21,20 @@ public class User {
 
 	private String name;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private String idCard;
+
+	private String email;
+
+	private String gender;
+
+	private String phone;
+
+	private boolean used;
+
+	/*@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")*/
 	private Date createTime;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	/*@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")*/
 	private Date updateTime;
 
 }

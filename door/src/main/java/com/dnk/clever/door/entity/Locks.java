@@ -8,25 +8,27 @@ import lombok.Setter;
 import java.util.Date;
 
 /**
- * Created by Archimedes on 2016-08-09.
+ * Created by Archimedes on 2016-08-13.
  */
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class House {
+public class Locks {
 
 	private Integer id;
 
-	private Integer unitId;
+	private Integer houseId;
+
+	private String uuid;
 
 	private String name;
 
-	private Integer code;
+	private Integer areaNo;
+
+	private Integer devNo;
 
 	private Date createTime;
 
 	private Date updateTime;
-
 }

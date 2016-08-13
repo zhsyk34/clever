@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dnk.clever.door.dao.BuildDao">
+<mapper namespace="com.dnk.clever.door.dao.UnitDao">
 
-	<sql id="entity">build</sql>
+	<sql id="entity">unit</sql>
 	<sql id="id">id</sql>
-	<sql id="column">id, name, code, createTime, updateTime</sql>
-	<sql id="search">search</sql>
+	<sql id="column">id, buildId, name, code, createTime, updateTime</sql>
+	<sql id="search"></sql>
 
 	<insert id="save">
 		INSERT INTO
 		<include refid="entity"/>
 		(<include refid="column"/>)
 		VALUES
-		(NULL, #{name}, #{code}, NULL, NULL)
+		(NULL, #{buildId}, #{name}, #{code}, NULL, NULL)
 	</insert>
 
 	<insert id="saves">
@@ -21,7 +21,7 @@
 		(<include refid="column"/>)
 		VALUES
 		<foreach collection="list" item="entity" separator=",">
-			(NULL, #{entity.name}, #{entity.code}, NULL, NULL)
+			(NULL, #{buildId}, #{name}, #{code}, NULL, NULL)
 		</foreach>
 	</insert>
 
@@ -67,13 +67,13 @@
 		UPDATE
 		<include refid="entity"/>
 		SET
-		name = #{name}, code = #{code}, updateTime = #{updateTime}
+		buildId = #{buildId}, name = #{name}, code = #{code}, updateTime = #{updateTime}
 		WHERE
 		<include refid="id"/>
 		= #{id}
 	</update>
 
-	<select id="findById" resultType="Build">
+	<select id="findById" resultType="Unit">
 		SELECT * FROM
 		<include refid="entity"/>
 		WHERE
@@ -81,7 +81,7 @@
 		= #{id}
 	</select>
 
-	<select id="findAll" resultType="Build">
+	<select id="findAll" resultType="Unit">
 		SELECT * FROM
 		<include refid="entity"/>
 		ORDER BY
@@ -89,7 +89,7 @@
 		DESC
 	</select>
 
-	<select id="findInterval" resultType="Build">
+	<select id="findInterval" resultType="Unit">
 		SELECT * FROM
 		<include refid="entity"/>
 		ORDER BY
@@ -103,13 +103,17 @@
 		<include refid="entity"/>
 	</select>
 
-	<!--AND name LIKE CONCAT("%",#{name},"%")-->
-	<select id="findList" resultType="Build">
-		SELECT * FROM
-		<include refid="entity"/>
+	<select id="findList" resultType="map">
+		SELECT
+		unit.*, build.name as build
+		FROM
+		unit JOIN build ON unit.buildId = build.id
 		<where>
-			<if test="name != null and name != ''">
-				name LIKE "%"#{name}"%"
+			<if test="build != null and build != ''">
+				build.name LIKE "%"#{build}"%"
+			</if>
+			<if test="unit != null and unit != ''">
+				AND unit.name LIKE "%"#{unit}"%"
 			</if>
 		</where>
 		ORDER BY
@@ -120,12 +124,16 @@
 		</if>
 	</select>
 
+	<!--TODO-->
 	<select id="countList" resultType="int">
 		SELECT COUNT(*) FROM
-		<include refid="entity"/>
+		unit JOIN build ON unit.buildId = build.id
 		<where>
-			<if test="name != null and name != ''">
-				name LIKE "%"#{name}"%"
+			<if test="build != null and build != ''">
+				AND build.name LIKE "%"#{build}"%"
+			</if>
+			<if test="unit != null and unit != ''">
+				AND unit.name LIKE "%"#{unit}"%"
 			</if>
 		</where>
 	</select>

@@ -9,4 +9,6 @@
 	<root level="debug">
 		<appender-ref ref="STDOUT"/>
 	</root>
+
+	<!--<logger name="com.dnk.clever.door.dao" level="INFO"/>-->
 </configuration>

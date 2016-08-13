@@ -7,6 +7,26 @@
 </head>
 <body>
 <div>
+	<div id="search">
+		<table>
+			<tbody>
+			<tr>
+				<td>姓名</td>
+				<td><input class="easyui-textbox"></td>
+				<td>name:</td>
+				<td>
+					<select class="easyui-combobox" style="width: 80px;">
+						<option value="">全部</option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+					</select>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
 	<div id="data"></div>
 
 	<div id="editor">
