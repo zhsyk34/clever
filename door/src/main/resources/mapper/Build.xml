@@ -3,9 +3,21 @@
 <mapper namespace="com.dnk.clever.door.dao.BuildDao">
 
 	<sql id="entity">build</sql>
+
 	<sql id="id">id</sql>
+
 	<sql id="column">id, name, code, createTime, updateTime</sql>
-	<sql id="search">search</sql>
+
+	<sql id="search">
+		<where>
+			<if test="name != null and name != ''">
+				name LIKE "%"#{name}"%"
+			</if>
+			<if test="code > 0">
+				AND code = #{code}
+			</if>
+		</where>
+	</sql>
 
 	<insert id="save">
 		INSERT INTO
@@ -107,11 +119,7 @@
 	<select id="findList" resultType="Build">
 		SELECT * FROM
 		<include refid="entity"/>
-		<where>
-			<if test="name != null and name != ''">
-				name LIKE "%"#{name}"%"
-			</if>
-		</where>
+		<include refid="search"/>
 		ORDER BY
 		<include refid="id"/>
 		DESC
@@ -123,10 +131,6 @@
 	<select id="countList" resultType="int">
 		SELECT COUNT(*) FROM
 		<include refid="entity"/>
-		<where>
-			<if test="name != null and name != ''">
-				name LIKE "%"#{name}"%"
-			</if>
-		</where>
+		<include refid="search"/>
 	</select>
 </mapper>

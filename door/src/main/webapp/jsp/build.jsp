@@ -7,6 +7,10 @@
 </head>
 <body>
 <div>
+	<div id="header">
+
+	</div>
+
 	<div id="data"></div>
 
 	<div id="editor">

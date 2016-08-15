@@ -28,13 +28,13 @@ public class UnitDaoTest extends BaseTest {
 //		unitDao.findList(null, null, -1, -1).forEach(map -> JSONParse.toJSON(map));
 //		unitDao.findList(null, null, -1, -1).forEach(map -> JSONParse.toJSON(map));
 //		unitDao.findList("1", null, -1, -1).forEach(map -> JSONParse.toJSON(map));
-		unitDao.findList("1", "9", 1, 1).forEach(map -> JSONParse.toJSON(map));
-
+//		unitDao.findList("1", -1, "9", 1, 1).forEach(map -> JSONParse.toJSON(map));
+		unitDao.findList(null, 90, null, -1, -1).forEach(map -> JSONParse.toJSON(map));
 	}
 
 	@Test
 	public void countList() throws Exception {
-		System.out.println(unitDao.countList("1", null));
+		System.out.println(unitDao.countList(null, 90, null));
 	}
 
 }

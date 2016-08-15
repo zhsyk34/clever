@@ -3,9 +3,24 @@
 <mapper namespace="com.dnk.clever.door.dao.UnitDao">
 
 	<sql id="entity">unit</sql>
+
 	<sql id="id">id</sql>
+
 	<sql id="column">id, buildId, name, code, createTime, updateTime</sql>
-	<sql id="search"></sql>
+
+	<sql id="search">
+		<where>
+			<if test="build != null and build != ''">
+				build.name LIKE "%"#{build}"%"
+			</if>
+			<if test="unit != null and unit != ''">
+				AND unit.name LIKE "%"#{unit}"%"
+			</if>
+			<if test="code > 0">
+				AND unit.code = #{code}
+			</if>
+		</where>
+	</sql>
 
 	<insert id="save">
 		INSERT INTO
@@ -108,14 +123,7 @@
 		unit.*, build.name as build
 		FROM
 		unit JOIN build ON unit.buildId = build.id
-		<where>
-			<if test="build != null and build != ''">
-				build.name LIKE "%"#{build}"%"
-			</if>
-			<if test="unit != null and unit != ''">
-				AND unit.name LIKE "%"#{unit}"%"
-			</if>
-		</where>
+		<include refid="search"/>
 		ORDER BY
 		<include refid="id"/>
 		DESC
@@ -124,17 +132,9 @@
 		</if>
 	</select>
 
-	<!--TODO-->
 	<select id="countList" resultType="int">
 		SELECT COUNT(*) FROM
 		unit JOIN build ON unit.buildId = build.id
-		<where>
-			<if test="build != null and build != ''">
-				AND build.name LIKE "%"#{build}"%"
-			</if>
-			<if test="unit != null and unit != ''">
-				AND unit.name LIKE "%"#{unit}"%"
-			</if>
-		</where>
+		<include refid="search"/>
 	</select>
 </mapper>

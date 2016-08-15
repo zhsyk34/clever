@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public interface UnitDao extends CommonsDao<Unit> {
 
-	List<Map> findList(@Param("build") String build, @Param("unit") String unit, @Param("offset") int offset, @Param("limit") int limit);
+	List<Map> findList(@Param("build") String build, @Param("code") int code, @Param("unit") String unit, @Param("offset") int offset, @Param("limit") int limit);
 
-	int countList(@Param("build") String build, @Param("unit") String unit);
+	int countList(@Param("build") String build, @Param("code") int code, @Param("unit") String unit);
 }

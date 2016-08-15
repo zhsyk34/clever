@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface BuildDao extends CommonsDao<Build> {
 
-	List<Build> findList(@Param("name") String name, @Param("offset") int offset, @Param("limit") int limit);
+	List<Build> findList(@Param("name") String name, @Param("code") int code, @Param("offset") int offset, @Param("limit") int limit);
 
-	int countList(@Param("name") String name);
+	int countList(@Param("name") String name, @Param("code") int code);
 }
