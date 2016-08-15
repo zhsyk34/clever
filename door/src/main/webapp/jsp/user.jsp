@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<%@ include file="/jsp/commons/header.jsp" %>
+	<%@ include file="/jsp/commons/commons.jsp" %>
 	<title>User list</title>
 	<script src="js/user.js"></script>
 </head>

@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dnk.clever.door.dao.BuildDao">
+<mapper namespace="com.dnk.clever.door.dao.HouseDao">
 
-	<sql id="entity">build</sql>
+	<sql id="entity">house</sql>
+
 	<sql id="id">id</sql>
-	<sql id="column">id, name, code, createTime, updateTime</sql>
+
+	<sql id="column">id, unitId, name, code, createTime, updateTime</sql>
+
 	<sql id="search">
+		house JOIN unit ON house.unitId = unit.id
+		JOIN build ON unit.buildId = build.id
 		<where>
-			<if test="name != null and name != ''">
-				name LIKE "%"#{name}"%"
+			<if test="build != null and build != ''">
+				build.name LIKE "%"#{build}"%"
 			</if>
-			<if test="code != null and code > 0">
-				AND code = #{code}
+			<if test="unit != null and unit != ''">
+				AND unit.name LIKE "%"#{unit}"%"
+			</if>
+			<if test="house != null and house != ''">
+				AND house.name LIKE "%"#{house}"%"
+			</if>
+			<if test="code > 0">
+				AND house.code = #{code}
 			</if>
 		</where>
 	</sql>
@@ -21,7 +32,7 @@
 		<include refid="entity"/>
 		(<include refid="column"/>)
 		VALUES
-		(NULL, #{name}, #{code}, NULL, NULL)
+		(NULL, #{unitId}, #{name}, #{code}, NULL, NULL)
 	</insert>
 
 	<insert id="saves">
@@ -30,7 +41,7 @@
 		(<include refid="column"/>)
 		VALUES
 		<foreach collection="list" item="entity" separator=",">
-			(NULL, #{entity.name}, #{entity.code}, NULL, NULL)
+			(NULL, #{entity.unitId}, #{entity.name}, #{entity.code}, NULL, NULL)
 		</foreach>
 	</insert>
 
@@ -76,13 +87,13 @@
 		UPDATE
 		<include refid="entity"/>
 		SET
-		name = #{name}, code = #{code}, updateTime = #{updateTime}
+		unitId = #{unitId}, name = #{name}, code = #{code}, updateTime = #{updateTime}
 		WHERE
 		<include refid="id"/>
 		= #{id}
 	</update>
 
-	<select id="findById" resultType="Build">
+	<select id="findById" resultType="House">
 		SELECT * FROM
 		<include refid="entity"/>
 		WHERE
@@ -90,7 +101,7 @@
 		= #{id}
 	</select>
 
-	<select id="findAll" resultType="Build">
+	<select id="findAll" resultType="House">
 		SELECT * FROM
 		<include refid="entity"/>
 		ORDER BY
@@ -98,7 +109,7 @@
 		DESC
 	</select>
 
-	<select id="findInterval" resultType="Build">
+	<select id="findInterval" resultType="House">
 		SELECT * FROM
 		<include refid="entity"/>
 		ORDER BY
@@ -112,10 +123,10 @@
 		<include refid="entity"/>
 	</select>
 
-	<!--AND name LIKE CONCAT("%",#{name},"%")-->
-	<select id="findList" resultType="Build">
-		SELECT * FROM
-		<include refid="entity"/>
+	<select id="findList" resultType="map">
+		SELECT
+		house.*, unit.name as unit, build.name as build
+		FROM
 		<include refid="search"/>
 		ORDER BY
 		<include refid="id"/>
@@ -127,7 +138,6 @@
 
 	<select id="countList" resultType="int">
 		SELECT COUNT(*) FROM
-		<include refid="entity"/>
 		<include refid="search"/>
 	</select>
 </mapper>

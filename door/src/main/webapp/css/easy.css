@@ -9,3 +9,11 @@
 .panel-title {
     padding-left: 5px;
 }
+
+#nav {
+    padding: 8px 10px;
+}
+
+#search {
+    margin-left: 15px;
+}

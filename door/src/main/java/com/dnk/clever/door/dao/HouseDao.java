@@ -1,6 +1,7 @@
 package com.dnk.clever.door.dao;
 
 import com.dnk.clever.door.entity.House;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
  */
 public interface HouseDao extends CommonsDao<House> {
 
-	List<Map> findList(String unit, String name, int offset, int limit);
+	List<Map> findList(@Param("build") String build, @Param("unit") String unit, @Param("house") String house, @Param("code") int code, @Param("offset") int offset, @Param("limit") int limit);
 
-	int countList(String unit, String name);
+	int countList(@Param("build") String build, @Param("unit") String unit, @Param("house") String house, @Param("code") int code);
 }

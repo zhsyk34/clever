@@ -4,9 +4,9 @@ import com.dnk.clever.door.dao.BuildDao;
 import com.dnk.clever.door.entity.Build;
 import com.dnk.clever.door.service.BuildService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,52 +24,41 @@ public class BuildServiceImpl implements BuildService {
 	}
 
 	@Override
-	public int saves(Collection<Build> builds) {
-		return buildDao.saves(builds);
-	}
-
-	@Override
-	public int deleteById(int id) {
-		return buildDao.deleteById(id);
-	}
-
-	@Override
-	public int deleteByEntity(Build build) {
-		return buildDao.deleteByEntity(build);
-	}
-
-	@Override
-	public int deleteByIds(int[] ids) {
-		return buildDao.deleteByIds(ids);
-	}
-
-	@Override
-	public int deleteByEntities(Collection<Build> builds) {
-		return buildDao.deleteByEntities(builds);
-	}
-
-	@Override
 	public int update(Build build) {
 		return buildDao.update(build);
 	}
 
+	//TODO 查询关联
 	@Override
-	public Build findById(int id) {
-		return buildDao.findById(id);
+	public int delete(int[] ids) {
+		return buildDao.deleteByIds(ids);
 	}
 
 	@Override
-	public List<Build> findAll() {
-		return buildDao.findAll();
+	public Build find(int code) {
+		List<Build> list = buildDao.findList(null, code, -1, -1);
+		return CollectionUtils.isEmpty(list) ? null : list.get(0);
 	}
 
 	@Override
-	public List<Build> findInterval(int offset, int limit) {
-		return buildDao.findInterval(offset, limit);
+	public List<Build> findList(String name, Integer code, int pageNo, int pageSize) {
+		return buildDao.findList(name, code, (pageNo - 1) * pageSize, pageSize);
 	}
 
 	@Override
-	public int count() {
-		return buildDao.count();
+	public List<Build> findList(String name, int pageNo, int pageSize) {
+		return this.findList(name, null, pageNo, pageSize);
 	}
+
+	@Override
+	public int countList(String name) {
+		return buildDao.countList(name, null);
+	}
+
+	@Override
+	public boolean exist(Integer id, int code) {
+		Build build = this.find(code);
+		return build == null ? false : !build.getId().equals(id);
+	}
+
 }

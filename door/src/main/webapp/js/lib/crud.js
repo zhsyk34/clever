@@ -1,7 +1,13 @@
 "use strict";
 (function ($) {
 	var crud = {
-		save: function (form, url, callback) {
+		clear: function (target) {
+			$(target).find("input:not(:radio,:checkbox),textarea").val("");
+			$(target).find(":radio:first").prop("checked", true);
+			$(target).find(":checkbox").prop("checked", false);
+			$(target).find("select option:first").prop("selected", true);
+		},
+		save: function (form, url, callback, before, param) {
 			form.form("submit", {
 				url: url,
 				onSubmit: function () {
@@ -9,6 +15,22 @@
 					if (!flag) {
 						$.messager.alert({title: $.message.warn, msg: "数据错误"});
 						return false;
+					}
+					if (before) {
+						var exist = true;
+						$.ajax({
+							url: before,
+							async: false,
+							type: "POST",
+							data: param,
+							success: function (data) {
+								exist = data;
+							}
+						});
+						if (exist) {
+							$.messager.alert({title: $.message.warn, msg: "数据已存在"});
+							return false;
+						}
 					}
 					$.messager.progress();
 				},
@@ -24,6 +46,9 @@
 						case "update":
 							$.messager.alert({title: $.message.prompt, msg: "修改成功"});
 							break;
+						case "exist":
+							$.messager.alert({title: $.message.prompt, msg: "数据已存在"});
+							break;
 						case "error":
 							$.messager.alert({title: $.message.prompt, msg: "出错了"});
 							return;
@@ -33,7 +58,6 @@
 			});
 		},
 		remove: function (url, ids, callback) {
-			console.log(ids);
 			typeof ids === "number" && (ids = [ids]);
 			if (ids.length === 0) {
 				$.messager.alert({title: $.message.prompt, msg: "请选择数据"});

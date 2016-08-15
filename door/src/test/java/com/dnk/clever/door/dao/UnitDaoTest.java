@@ -5,6 +5,7 @@ import com.dnk.clever.door.util.JSONParse;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Archimedes on 2016-08-13.
@@ -29,12 +30,14 @@ public class UnitDaoTest extends BaseTest {
 //		unitDao.findList(null, null, -1, -1).forEach(map -> JSONParse.toJSON(map));
 //		unitDao.findList("1", null, -1, -1).forEach(map -> JSONParse.toJSON(map));
 //		unitDao.findList("1", -1, "9", 1, 1).forEach(map -> JSONParse.toJSON(map));
-		unitDao.findList(null, 90, null, -1, -1).forEach(map -> JSONParse.toJSON(map));
+//		unitDao.findList(null, null, 90, -1, -1).forEach(map -> JSONParse.toJSON(map));
 	}
 
 	@Test
 	public void countList() throws Exception {
-		System.out.println(unitDao.countList(null, 90, null));
+//		System.out.println(unitDao.countList(null, null, 90));
+		List<Unit> list = unitDao.findList(null, -1, -1, -1);
+		list.forEach(JSONParse::toJSON);
 	}
 
 }

@@ -80,8 +80,8 @@ public class BuildDaoTest extends BaseTest {
 			build.setName("哈哈");
 			build.setUpdateTime(new Date());
 		});
-		int count = buildService.updates(builds);
-		System.out.println(count);
+//		int count = buildService.updates(builds);
+//		System.out.println(count);
 	}
 
 	@Test

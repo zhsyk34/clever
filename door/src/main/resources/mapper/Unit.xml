@@ -3,12 +3,10 @@
 <mapper namespace="com.dnk.clever.door.dao.UnitDao">
 
 	<sql id="entity">unit</sql>
-
 	<sql id="id">id</sql>
-
 	<sql id="column">id, buildId, name, code, createTime, updateTime</sql>
-
 	<sql id="search">
+		unit JOIN build ON unit.buildId = build.id
 		<where>
 			<if test="build != null and build != ''">
 				build.name LIKE "%"#{build}"%"
@@ -16,7 +14,7 @@
 			<if test="unit != null and unit != ''">
 				AND unit.name LIKE "%"#{unit}"%"
 			</if>
-			<if test="code > 0">
+			<if test="code != null and code > 0">
 				AND unit.code = #{code}
 			</if>
 		</where>
@@ -36,7 +34,7 @@
 		(<include refid="column"/>)
 		VALUES
 		<foreach collection="list" item="entity" separator=",">
-			(NULL, #{buildId}, #{name}, #{code}, NULL, NULL)
+			(NULL, #{entity.buildId}, #{entity.name}, #{entity.code}, NULL, NULL)
 		</foreach>
 	</insert>
 
@@ -118,11 +116,30 @@
 		<include refid="entity"/>
 	</select>
 
-	<select id="findList" resultType="map">
+	<select id="findList" resultType="Unit">
+		SELECT *
+		FROM
+		<include refid="entity"/>
+		<where>
+			<if test="name != null and name != ''">
+				AND name LIKE "%"#{name}"%"
+			</if>
+			<if test="code != null and code > 0">
+				AND code = #{code}
+			</if>
+		</where>
+		ORDER BY
+		<include refid="id"/>
+		DESC
+		<if test="offset >= 0 and limit > 0">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="findMap" resultType="map">
 		SELECT
 		unit.*, build.name as build
 		FROM
-		unit JOIN build ON unit.buildId = build.id
 		<include refid="search"/>
 		ORDER BY
 		<include refid="id"/>
@@ -132,9 +149,8 @@
 		</if>
 	</select>
 
-	<select id="countList" resultType="int">
+	<select id="countMap" resultType="int">
 		SELECT COUNT(*) FROM
-		unit JOIN build ON unit.buildId = build.id
 		<include refid="search"/>
 	</select>
 </mapper>

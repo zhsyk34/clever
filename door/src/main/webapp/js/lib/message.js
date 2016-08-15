@@ -13,6 +13,8 @@
 		sure: "确定",
 		cancel: "取消",
 
+		// exist: "该数据已存在",
+
 		select: "请选择数据",
 		assign: "请指定数据"
 
