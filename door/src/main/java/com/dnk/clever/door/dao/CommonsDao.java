@@ -5,10 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Archimedes on 2016-08-09.
- */
-public interface CommonsDao<Entity> {
+interface CommonsDao<Entity> {
 
 	int save(Entity entity);
 

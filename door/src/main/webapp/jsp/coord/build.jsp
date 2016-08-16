@@ -24,11 +24,8 @@
 
 	<div id="editor">
 		<form id="form" method="post">
+			<input name="id" type="text">
 			<table>
-				<tr>
-					<td>id:</td>
-					<td><input name="id" type="hidden"></td>
-				</tr>
 				<tr>
 					<td>楼栋名称:</td>
 					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true,validType:'length[1,30]'"></td>

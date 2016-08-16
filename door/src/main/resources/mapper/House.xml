@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dnk.clever.door.dao.HouseDao">
-
 	<sql id="entity">house</sql>
-
 	<sql id="id">id</sql>
-
 	<sql id="column">id, unitId, name, code, createTime, updateTime</sql>
-
+	<sql id="page">
+		<if test="offset >= 0 and limit > 0">
+			limit #{offset}, #{limit}
+		</if>
+	</sql>
 	<sql id="search">
 		house JOIN unit ON house.unitId = unit.id
 		JOIN build ON unit.buildId = build.id
@@ -21,8 +22,8 @@
 			<if test="house != null and house != ''">
 				AND house.name LIKE "%"#{house}"%"
 			</if>
-			<if test="code > 0">
-				AND house.code = #{code}
+			<if test="code != null and code > 0">
+				AND unit.code = #{code}
 			</if>
 		</where>
 	</sql>
@@ -87,7 +88,7 @@
 		UPDATE
 		<include refid="entity"/>
 		SET
-		unitId = #{unitId}, name = #{name}, code = #{code}, updateTime = #{updateTime}
+		buildId = #{buildId}, name = #{name}, code = #{code}, updateTime = #{updateTime}
 		WHERE
 		<include refid="id"/>
 		= #{id}
@@ -115,7 +116,7 @@
 		ORDER BY
 		<include refid="id"/>
 		DESC
-		limit #{offset}, #{limit}
+		<include refid="page"/>
 	</select>
 
 	<select id="count" resultType="int">
@@ -123,7 +124,27 @@
 		<include refid="entity"/>
 	</select>
 
-	<select id="findList" resultType="map">
+	<select id="findList" resultType="House">
+		SELECT * FROM
+		<include refid="entity"/>
+		<where>
+			<if test="unitId != null and unitId > 0">
+				unitId = #{unitId}
+			</if>
+			<if test="name != null and name != ''">
+				AND name LIKE "%"#{name}"%"
+			</if>
+			<if test="code != null and code > 0">
+				AND code = #{code}
+			</if>
+		</where>
+		ORDER BY
+		<include refid="id"/>
+		DESC
+		<include refid="page"/>
+	</select>
+
+	<select id="findMap" resultType="map">
 		SELECT
 		house.*, unit.name as unit, build.name as build
 		FROM
@@ -131,12 +152,10 @@
 		ORDER BY
 		<include refid="id"/>
 		DESC
-		<if test="offset >= 0 and limit > 0">
-			limit #{offset}, #{limit}
-		</if>
+		<include refid="page"/>
 	</select>
 
-	<select id="countList" resultType="int">
+	<select id="countMap" resultType="int">
 		SELECT COUNT(*) FROM
 		<include refid="search"/>
 	</select>

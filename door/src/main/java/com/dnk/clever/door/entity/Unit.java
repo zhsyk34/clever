@@ -7,9 +7,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-/**
- * Created by Archimedes on 2016-08-09.
- */
 @Getter
 @Setter
 @NoArgsConstructor

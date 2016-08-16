@@ -1,6 +1,3 @@
-/**
- * Created by Archimedes on 2016-08-12.
- */
 (function ($) {
 	var message = {
 		prompt: "提示",
@@ -17,7 +14,6 @@
 
 		select: "请选择数据",
 		assign: "请指定数据"
-
 	};
 
 	$.extend({message: message});

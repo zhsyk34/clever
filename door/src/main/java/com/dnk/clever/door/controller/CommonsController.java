@@ -4,6 +4,8 @@ import com.dnk.clever.door.service.BuildService;
 import com.dnk.clever.door.service.HouseService;
 import com.dnk.clever.door.service.UnitService;
 import com.dnk.clever.door.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -12,10 +14,10 @@ import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by Archimedes on 2016-08-09.
- */
-public class CommonsController {
+class CommonsController {
+
+	protected static final Logger logger = LoggerFactory.getLogger(CommonsController.class);
+
 	@Resource
 	protected UserService userService;
 	@Resource

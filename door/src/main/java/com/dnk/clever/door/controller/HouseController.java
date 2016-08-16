@@ -1,32 +1,33 @@
 package com.dnk.clever.door.controller;
 
-import com.dnk.clever.door.entity.Build;
+import com.dnk.clever.door.entity.House;
 import com.dnk.clever.door.vo.EasyGrid;
 import com.dnk.clever.door.vo.Feedback;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping("/build")
-public class BuildController extends CommonsController {
+@RequestMapping("/house")
+public class HouseController extends CommonsController {
 
 	@RequestMapping(value = "/list")
 	@ResponseBody
-	public List<Build> list(String name) {
-		return buildService.findList(name, -1, -1);
+	public List<House> list(Integer unitId) {
+		System.out.println("unitId : " + unitId);
+		return unitId == null ? null : houseService.findList(unitId, null, -1, -1);
 	}
 
 	@RequestMapping(value = "/find")
 	@ResponseBody
-	public EasyGrid<Build> find(String name, int page, int rows) {
-		EasyGrid<Build> grid = new EasyGrid<>();
-		List<Build> list = buildService.findList(name, page, rows);
-		int total = buildService.count(name);
+	public EasyGrid<Map> find(String build, String unit, String house, int page, int rows) {
+		EasyGrid<Map> grid = new EasyGrid<>();
+		List<Map> list = houseService.findList(build, unit, house, page, rows);
+		int total = houseService.count(build, unit, house);
 		grid.setRows(list);
 		grid.setTotal(total);
 		return grid;
@@ -34,24 +35,15 @@ public class BuildController extends CommonsController {
 
 	@RequestMapping(value = "/save")
 	@ResponseBody
-	public String save(Build build) {
-		Integer code = build.getCode();
-
-		if (StringUtils.isEmpty(build.getName()) || code == null || code <= 0) {
-			return Feedback.ERROR.toString();
-		}
-		if (buildService.exist(build.getId(), code)) {
-			return Feedback.EXIST.toString();
-		}
-
-		Integer id = build.getId();
+	public String save(House house) {
+		Integer id = house.getId();
 		if (id == null || id <= 0) {
-			buildService.save(build);
+			houseService.save(house);
 			return Feedback.CREATE.toString();
 		}
 
-		build.setUpdateTime(new Date());
-		buildService.update(build);
+		house.setUpdateTime(new Date());
+		houseService.update(house);
 		return Feedback.UPDATE.toString();
 	}
 
@@ -61,17 +53,16 @@ public class BuildController extends CommonsController {
 		if (ids == null || ids.length == 0) {
 			return Feedback.ERROR.toString();
 		}
-		if (buildService.relate(ids)) {
+		if (houseService.relate(ids)) {
 			return Feedback.RELATE.toString();
 		}
-		buildService.delete(ids);
+		houseService.delete(ids);
 		return Feedback.DELETE.toString();
 	}
 
 	@RequestMapping(value = "/exist")
 	@ResponseBody
 	public boolean exist(Integer id, int code) {
-		return buildService.exist(id, code);
+		return houseService.exist(id, code);
 	}
-
 }

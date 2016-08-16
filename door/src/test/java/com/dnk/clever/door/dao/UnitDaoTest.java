@@ -1,11 +1,9 @@
 package com.dnk.clever.door.dao;
 
 import com.dnk.clever.door.entity.Unit;
-import com.dnk.clever.door.util.JSONParse;
 import org.junit.Test;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created by Archimedes on 2016-08-13.
@@ -36,8 +34,8 @@ public class UnitDaoTest extends BaseTest {
 	@Test
 	public void countList() throws Exception {
 //		System.out.println(unitDao.countList(null, null, 90));
-		List<Unit> list = unitDao.findList(null, -1, -1, -1);
-		list.forEach(JSONParse::toJSON);
+//		List<Unit> list = unitDao.findList(null, -1, -1, -1);
+//		list.forEach(JSONParse::toJSON);
 	}
 
 }

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dnk.clever.door.dao.UnitDao">
-
 	<sql id="entity">unit</sql>
 	<sql id="id">id</sql>
 	<sql id="column">id, buildId, name, code, createTime, updateTime</sql>
+	<sql id="page">
+		<if test="offset >= 0 and limit > 0">
+			limit #{offset}, #{limit}
+		</if>
+	</sql>
 	<sql id="search">
 		unit JOIN build ON unit.buildId = build.id
 		<where>
@@ -108,7 +112,7 @@
 		ORDER BY
 		<include refid="id"/>
 		DESC
-		limit #{offset}, #{limit}
+		<include refid="page"/>
 	</select>
 
 	<select id="count" resultType="int">
@@ -117,10 +121,12 @@
 	</select>
 
 	<select id="findList" resultType="Unit">
-		SELECT *
-		FROM
+		SELECT * FROM
 		<include refid="entity"/>
 		<where>
+			<if test="buildId != null and buildId > 0">
+				buildId = #{buildId}
+			</if>
 			<if test="name != null and name != ''">
 				AND name LIKE "%"#{name}"%"
 			</if>
@@ -131,9 +137,7 @@
 		ORDER BY
 		<include refid="id"/>
 		DESC
-		<if test="offset >= 0 and limit > 0">
-			limit #{offset}, #{limit}
-		</if>
+		<include refid="page"/>
 	</select>
 
 	<select id="findMap" resultType="map">
@@ -144,9 +148,7 @@
 		ORDER BY
 		<include refid="id"/>
 		DESC
-		<if test="offset >= 0 and limit > 0">
-			limit #{offset}, #{limit}
-		</if>
+		<include refid="page"/>
 	</select>
 
 	<select id="countMap" resultType="int">

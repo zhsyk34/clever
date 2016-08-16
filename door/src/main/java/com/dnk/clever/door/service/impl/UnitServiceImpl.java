@@ -1,5 +1,6 @@
 package com.dnk.clever.door.service.impl;
 
+import com.dnk.clever.door.dao.HouseDao;
 import com.dnk.clever.door.dao.UnitDao;
 import com.dnk.clever.door.entity.Unit;
 import com.dnk.clever.door.service.UnitService;
@@ -10,14 +11,13 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Archimedes on 2016-08-15.
- */
 @Service
 public class UnitServiceImpl implements UnitService {
 
 	@Resource
 	private UnitDao unitDao;
+	@Resource
+	private HouseDao houseDao;
 
 	@Override
 	public int save(Unit unit) {
@@ -36,28 +36,44 @@ public class UnitServiceImpl implements UnitService {
 
 	@Override
 	public Unit find(int code) {
-		List<Unit> list = unitDao.findList(null, code, -1, -1);
+		List<Unit> list = unitDao.findList(null, null, code, -1, -1);
 		return CollectionUtils.isEmpty(list) ? null : list.get(0);
 	}
 
 	@Override
-	public List<Map> findList(String build, String unit, Integer code, int pageNo, int pageSize) {
-		return unitDao.findMap(build, unit, code, (pageNo - 1) * pageSize, pageSize);
+	public List<Unit> findList(Integer buildId, String name, int pageNo, int pageSize) {
+		return unitDao.findList(buildId, name, null, (pageNo - 1) * pageSize, pageSize);
 	}
 
 	@Override
 	public List<Map> findList(String build, String unit, int pageNo, int pageSize) {
-		return this.findList(build, unit, null, pageNo, pageSize);
+		return unitDao.findMap(build, unit, null, (pageNo - 1) * pageSize, pageSize);
 	}
 
 	@Override
-	public int countList(String build, String unit) {
+	public int count(String build, String unit) {
 		return unitDao.countMap(build, unit, null);
 	}
 
 	@Override
 	public boolean exist(Integer id, int code) {
 		Unit unit = this.find(code);
-		return unit == null ? false : !unit.getId().equals(id);
+		return unit != null && !unit.getId().equals(id);
+	}
+
+	//TODO gateway
+	@Override
+	public boolean relate(int id) {
+		return !CollectionUtils.isEmpty(houseDao.findList(id, null, null, -1, -1));
+	}
+
+	@Override
+	public boolean relate(int[] ids) {
+		for (int id : ids) {
+			if (this.relate(id)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

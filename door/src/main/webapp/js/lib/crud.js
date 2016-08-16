@@ -7,11 +7,13 @@
 			$(target).find(":checkbox").prop("checked", false);
 			$(target).find("select option:first").prop("selected", true);
 		},
-		save: function (form, url, callback, before, param) {
-			form.form("submit", {
+		save: function (options) {
+			var $form = options.form, url = options.url, callback = options.callback, before = options.before, param = options.param || null;
+
+			$form.form("submit", {
 				url: url,
 				onSubmit: function () {
-					var flag = form.form("validate");
+					var flag = $form.form("validate");
 					if (!flag) {
 						$.messager.alert({title: $.message.warn, msg: "数据错误"});
 						return false;
@@ -57,8 +59,11 @@
 				}
 			});
 		},
-		remove: function (url, ids, callback) {
+		remove: function (options) {
+			var url = options.url, ids = options.ids, callback = options.callback;
+
 			typeof ids === "number" && (ids = [ids]);
+			console.log(ids);
 			if (ids.length === 0) {
 				$.messager.alert({title: $.message.prompt, msg: "请选择数据"});
 				return;
@@ -71,9 +76,7 @@
 							traditional: true,
 							async: false,
 							type: "POST",
-							data: {
-								ids: ids
-							},
+							data: {ids: ids},
 							success: function (feedback) {
 								feedback = (feedback || "error").toLowerCase();
 								switch (feedback) {
@@ -95,8 +98,7 @@
 			});
 		}
 	};
-	$.extend({
-		crud: crud
-	});
+
+	$.extend({crud: crud});
 })(jQuery);
 
