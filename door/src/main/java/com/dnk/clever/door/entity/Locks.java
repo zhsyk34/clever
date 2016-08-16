@@ -7,9 +7,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-/**
- * Created by Archimedes on 2016-08-13.
- */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,7 +17,7 @@ public class Locks {
 
 	private Integer houseId;
 
-	private String uuid;
+	private String guid;
 
 	private String name;
 

@@ -55,7 +55,7 @@ CREATE TABLE house (
 CREATE TABLE gateway (
   id         INT          NOT NULL AUTO_INCREMENT,
   unitId     INT          NOT NULL,
-  uuid       VARCHAR(30)  NOT NULL,
+  udid       VARCHAR(30)  NOT NULL,
   name       VARCHAR(30)  NOT NULL,
   /*coordinate VARCHAR(30) NOT NULL,*//*通过unit_id可追溯 build-unit*/
   ip         VARCHAR(40)  NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE gateway (
 CREATE TABLE locks (
   id         INT              NOT NULL AUTO_INCREMENT,
   houseId    INT              NOT NULL,
-  uuid       VARCHAR(30)      NOT NULL,
+  guid       VARCHAR(30)      NOT NULL,
   name       VARCHAR(30)      NOT NULL,
   areaNo     TINYINT UNSIGNED NOT NULL,
   devNo      TINYINT UNSIGNED NOT NULL,

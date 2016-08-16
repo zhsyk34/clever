@@ -17,7 +17,7 @@ public class Gateway {
 
 	private Integer unitId;
 
-	private String uuid;
+	private String udid;
 
 	private String name;
 
