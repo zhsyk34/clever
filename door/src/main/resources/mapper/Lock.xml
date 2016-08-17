@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dnk.clever.door.dao.HouseDao">
-	<sql id="entity">house</sql>
+<mapper namespace="com.dnk.clever.door.dao.LockDao">
+	<sql id="entity">locks</sql>
 	<sql id="id">id</sql>
-	<sql id="column">id, unitId, name, code, createTime, updateTime</sql>
+	<sql id="column">id, houseId, uuid, name, area, device, createTime, updateTime</sql>
 	<sql id="page">
 		<if test="offset >= 0 and limit > 0">
 			limit #{offset}, #{limit}
 		</if>
 	</sql>
 	<sql id="search">
-		house JOIN unit ON house.unitId = unit.id
+		<include refid="entity"/>
+		JOIN house ON locks.houseId = house.id
+		JOIN unit ON house.unitId = unit.id
 		JOIN build ON unit.buildId = build.id
 		<where>
 			<if test="build != null and build != ''">
@@ -22,8 +24,8 @@
 			<if test="house != null and house != ''">
 				AND house.name LIKE "%"#{house}"%"
 			</if>
-			<if test="code != null and code > 0">
-				AND unit.code = #{code}
+			<if test="name != null and name != ''">
+				AND locks.name LIKE "%"#{name}"%"
 			</if>
 		</where>
 	</sql>
@@ -33,7 +35,7 @@
 		<include refid="entity"/>
 		(<include refid="column"/>)
 		VALUES
-		(NULL, #{unitId}, #{name}, #{code}, NULL, NULL)
+		(NULL, #{houseId}, UUID(), #{name}, #{area}, #{device}, NULL, NULL)
 	</insert>
 
 	<insert id="saves">
@@ -42,7 +44,7 @@
 		(<include refid="column"/>)
 		VALUES
 		<foreach collection="list" item="entity" separator=",">
-			(NULL, #{entity.unitId}, #{entity.name}, #{entity.code}, NULL, NULL)
+			(NULL, #{entity.houseId}, UUID(), #{entity.name}, #{entity.area}, #{entity.device}, NULL, NULL)
 		</foreach>
 	</insert>
 
@@ -88,13 +90,13 @@
 		UPDATE
 		<include refid="entity"/>
 		SET
-		unitId = #{unitId}, name = #{name}, code = #{code}, updateTime = #{updateTime}
+		houseId = #{houseId}, name = #{name}, area = #{area}, device = #{device}, updateTime = CURRENT_TIMESTAMP
 		WHERE
 		<include refid="id"/>
 		= #{id}
 	</update>
 
-	<select id="findById" resultType="House">
+	<select id="findById" resultType="Lock">
 		SELECT * FROM
 		<include refid="entity"/>
 		WHERE
@@ -102,7 +104,7 @@
 		= #{id}
 	</select>
 
-	<select id="findAll" resultType="House">
+	<select id="findAll" resultType="Lock">
 		SELECT * FROM
 		<include refid="entity"/>
 		ORDER BY
@@ -110,7 +112,7 @@
 		DESC
 	</select>
 
-	<select id="findInterval" resultType="House">
+	<select id="findInterval" resultType="Lock">
 		SELECT * FROM
 		<include refid="entity"/>
 		ORDER BY
@@ -124,18 +126,18 @@
 		<include refid="entity"/>
 	</select>
 
-	<select id="findList" resultType="House">
+	<select id="findList" resultType="Lock">
 		SELECT * FROM
 		<include refid="entity"/>
 		<where>
-			<if test="unitId != null and unitId > 0">
-				unitId = #{unitId}
+			<if test="houseId != null and houseId > 0">
+				houseId = #{houseId}
+			</if>
+			<if test="uuid != null and uuid != ''">
+				AND uuid = #{uuid}
 			</if>
 			<if test="name != null and name != ''">
 				AND name LIKE "%"#{name}"%"
-			</if>
-			<if test="code != null and code > 0">
-				AND code = #{code}
 			</if>
 		</where>
 		ORDER BY
@@ -146,7 +148,7 @@
 
 	<select id="findMap" resultType="map">
 		SELECT
-		house.*, unit.name as unit, build.id as buildId, build.name as build
+		locks.*, house.name as house, unit.id as unitId, unit.name as unit, build.id as buildId, build.name as build
 		FROM
 		<include refid="search"/>
 		ORDER BY

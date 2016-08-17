@@ -30,18 +30,18 @@ public class UnitServiceImpl implements UnitService {
 	}
 
 	@Override
-	public int delete(int[] ids) {
+	public int delete(long[] ids) {
 		return unitDao.deleteByIds(ids);
 	}
 
 	@Override
-	public Unit find(int code) {
+	public Unit find(long code) {
 		List<Unit> list = unitDao.findList(null, null, code, -1, -1);
 		return CollectionUtils.isEmpty(list) ? null : list.get(0);
 	}
 
 	@Override
-	public List<Unit> findList(Integer buildId, String name, int pageNo, int pageSize) {
+	public List<Unit> findList(Long buildId, String name, int pageNo, int pageSize) {
 		return unitDao.findList(buildId, name, null, (pageNo - 1) * pageSize, pageSize);
 	}
 
@@ -56,20 +56,20 @@ public class UnitServiceImpl implements UnitService {
 	}
 
 	@Override
-	public boolean exist(Integer id, int code) {
+	public boolean exist(long id, long code) {
 		Unit unit = this.find(code);
-		return unit != null && !unit.getId().equals(id);
+		return unit != null && unit.getId() != id;
 	}
 
 	//TODO gateway
 	@Override
-	public boolean relate(int id) {
+	public boolean relate(long id) {
 		return !CollectionUtils.isEmpty(houseDao.findList(id, null, null, -1, -1));
 	}
 
 	@Override
-	public boolean relate(int[] ids) {
-		for (int id : ids) {
+	public boolean relate(long[] ids) {
+		for (long id : ids) {
 			if (this.relate(id)) {
 				return true;
 			}

@@ -1,32 +1,33 @@
 package com.dnk.clever.door.controller;
 
 import com.dnk.clever.door.entity.Build;
+import com.dnk.clever.door.entity.Gateway;
+import com.dnk.clever.door.util.JSONParse;
 import com.dnk.clever.door.vo.EasyGrid;
 import com.dnk.clever.door.vo.Feedback;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping("/build")
-public class BuildController extends CommonsController {
+@RequestMapping("/gateway")
+public class GatewayController extends CommonsController {
 
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public List<Build> list(String name) {
-		return buildService.findList(name, -1, -1);
+		return null;
 	}
 
 	@RequestMapping(value = "/find")
 	@ResponseBody
-	public EasyGrid<Build> find(String name, int page, int rows) {
-		EasyGrid<Build> grid = new EasyGrid<>();
-		List<Build> list = buildService.findList(name, page, rows);
-		int total = buildService.count(name);
+	public EasyGrid<Map> find(String build, String unit, String name, int page, int rows) {
+		EasyGrid<Map> grid = new EasyGrid<>();
+		List<Map> list = gatewayService.findList(build, unit, name, page, rows);
+		int total = gatewayService.count(build, unit, name);
 		grid.setRows(list);
 		grid.setTotal(total);
 		return grid;
@@ -34,23 +35,13 @@ public class BuildController extends CommonsController {
 
 	@RequestMapping(value = "/save")
 	@ResponseBody
-	public String save(Build build) {
-		long code = build.getCode();
-
-		if (StringUtils.isEmpty(build.getName()) || code <= 0) {
-			return Feedback.ERROR.toString();
-		}
-		if (buildService.exist(build.getId(), code)) {
-			return Feedback.EXIST.toString();
-		}
-
-		if (build.getId() <= 0) {
-			buildService.save(build);
+	public String save(Gateway gateway) {
+		JSONParse.toJSON(gateway);
+		if (gateway.getId() <= 0) {
+			gatewayService.save(gateway);
 			return Feedback.CREATE.toString();
 		}
-
-		build.setUpdateTime(new Date());
-		buildService.update(build);
+		gatewayService.update(gateway);
 		return Feedback.UPDATE.toString();
 	}
 
@@ -60,17 +51,17 @@ public class BuildController extends CommonsController {
 		if (ids == null || ids.length == 0) {
 			return Feedback.ERROR.toString();
 		}
-		if (buildService.relate(ids)) {
+		if (gatewayService.relate(ids)) {
 			return Feedback.RELATE.toString();
 		}
-		buildService.delete(ids);
+		gatewayService.delete(ids);
 		return Feedback.DELETE.toString();
 	}
 
 	@RequestMapping(value = "/exist")
 	@ResponseBody
 	public boolean exist(Integer id, int code) {
-		return buildService.exist(id, code);
+		//TODO
+		return false;
 	}
-
 }

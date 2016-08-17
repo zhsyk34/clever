@@ -1,9 +1,6 @@
 package com.dnk.clever.door.controller;
 
-import com.dnk.clever.door.service.BuildService;
-import com.dnk.clever.door.service.HouseService;
-import com.dnk.clever.door.service.UnitService;
-import com.dnk.clever.door.service.UserService;
+import com.dnk.clever.door.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -26,6 +23,10 @@ class CommonsController {
 	protected UnitService unitService;
 	@Resource
 	protected HouseService houseService;
+	@Resource
+	protected GatewayService gatewayService;
+	@Resource
+	protected LockService lockService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

@@ -20,7 +20,7 @@ public class HouseDaoTest extends BaseTest {
 	public void add() {
 		List<House> houses = new ArrayList<>();
 		for (int i = 1; i < 6; i++) {
-			House house = new House(null, 2, "套房" + i, 800 + i, null, null);
+			House house = new House(-1, 2, "套房" + i, 800 + i, null, null);
 			houses.add(house);
 		}
 		houseDao.saves(houses);

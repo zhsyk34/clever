@@ -17,7 +17,7 @@ public class UnitDaoTest extends BaseTest {
 	@Test
 	public void add() {
 		for (int i = 0; i < 6; i++) {
-			Unit unit = new Unit(null, 1, "单元" + i, 90 + i, null, null);
+			Unit unit = new Unit(0, 1, "单元" + i, 90 + i, null, null);
 			unitDao.save(unit);
 		}
 	}

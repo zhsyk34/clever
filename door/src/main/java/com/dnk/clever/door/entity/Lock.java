@@ -11,19 +11,19 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Locks {
+public class Lock {
 
-	private Integer id;
+	private long id;
 
-	private Integer houseId;
+	private long houseId;
 
-	private String guid;
+	private String uuid;//自动增长
 
 	private String name;
 
-	private Integer areaNo;
+	private int area;
 
-	private Integer devNo;
+	private int device;
 
 	private Date createTime;
 

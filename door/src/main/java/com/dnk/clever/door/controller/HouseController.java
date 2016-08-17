@@ -1,6 +1,7 @@
 package com.dnk.clever.door.controller;
 
 import com.dnk.clever.door.entity.House;
+import com.dnk.clever.door.util.JSONParse;
 import com.dnk.clever.door.vo.EasyGrid;
 import com.dnk.clever.door.vo.Feedback;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,7 @@ public class HouseController extends CommonsController {
 
 	@RequestMapping(value = "/list")
 	@ResponseBody
-	public List<House> list(Integer unitId) {
-		System.out.println("unitId : " + unitId);
+	public List<House> list(Long unitId) {
 		return unitId == null ? null : houseService.findList(unitId, null, -1, -1);
 	}
 
@@ -36,8 +36,8 @@ public class HouseController extends CommonsController {
 	@RequestMapping(value = "/save")
 	@ResponseBody
 	public String save(House house) {
-		Integer id = house.getId();
-		if (id == null || id <= 0) {
+		System.out.println(JSONParse.toJSON(house));
+		if (house.getId() <= 0) {
 			houseService.save(house);
 			return Feedback.CREATE.toString();
 		}
@@ -49,7 +49,7 @@ public class HouseController extends CommonsController {
 
 	@RequestMapping(value = "/delete")
 	@ResponseBody
-	public String delete(int[] ids) {
+	public String delete(long[] ids) {
 		if (ids == null || ids.length == 0) {
 			return Feedback.ERROR.toString();
 		}

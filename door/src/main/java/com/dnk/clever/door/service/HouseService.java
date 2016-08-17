@@ -11,19 +11,19 @@ public interface HouseService {
 
 	int update(House house);
 
-	int delete(int[] ids);
+	int delete(long[] ids);
 
-	House find(int code);
+	House find(long code);
 
-	List<House> findList(Integer unitId, String name, int pageNo, int pageSize);
+	List<House> findList(Long unitId, String name, int pageNo, int pageSize);
 
 	List<Map> findList(String build, String unit, String house, int pageNo, int pageSize);
 
 	int count(String build, String unit, String house);
 
-	boolean exist(Integer id, int code);
+	boolean exist(long id, long code);
 
-	boolean relate(int id);
+	boolean relate(long id);
 
-	boolean relate(int[] ids);
+	boolean relate(long[] ids);
 }

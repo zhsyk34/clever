@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class User {
 
-	private Integer id;
+	private long id;
 
 	private String name;
 

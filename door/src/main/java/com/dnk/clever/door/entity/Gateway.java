@@ -13,24 +13,24 @@ import java.util.Date;
 @AllArgsConstructor
 public class Gateway {
 
-	private Integer id;
+	private long id;
 
-	private Integer unitId;
+	private long unitId;
 
-	private String udid;
+	private String udid;//识别码,出厂设置
 
 	private String name;
 
 	private String ip;
 
-	private Integer port;
+	private int port;
 
 	private String remote;
 
 	private String version;
 
 	/*二维码*/
-	private String qr_code;
+	private String qrCode;
 
 	private Date createTime;
 

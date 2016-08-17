@@ -17,7 +17,7 @@ public class UnitController extends CommonsController {
 
 	@RequestMapping(value = "/list")
 	@ResponseBody
-	public List<Unit> list(Integer buildId) {
+	public List<Unit> list(Long buildId) {
 		System.out.println(buildId);
 		return buildId == null ? null : unitService.findList(buildId, null, -1, -1);
 	}
@@ -37,8 +37,12 @@ public class UnitController extends CommonsController {
 	@RequestMapping(value = "/save")
 	@ResponseBody
 	public String save(Unit unit) {
-		Integer id = unit.getId();
-		if (id == null || id <= 0) {
+		System.out.println(unit.getBuildId());
+		if (unit.getBuildId() <= 0) {
+			return Feedback.ERROR.toString();
+		}
+		long id = unit.getId();
+		if (id <= 0) {
 			unitService.save(unit);
 			return Feedback.CREATE.toString();
 		}
@@ -50,7 +54,7 @@ public class UnitController extends CommonsController {
 
 	@RequestMapping(value = "/delete")
 	@ResponseBody
-	public String delete(int[] ids) {
+	public String delete(long[] ids) {
 		if (ids == null || ids.length == 0) {
 			return Feedback.ERROR.toString();
 		}

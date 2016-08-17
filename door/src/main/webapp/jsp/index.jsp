@@ -36,6 +36,16 @@
 					</li>
 				</ul>
 			</div>
+			<div title="设备">
+				<ul>
+					<li>
+						<a href="jsp/device/lock.jsp">门锁管理</a>
+					</li>
+					<li>
+						<a href="jsp/device/gateway.jsp">网关管理</a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 

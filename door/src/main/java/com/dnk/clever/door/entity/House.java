@@ -13,13 +13,13 @@ import java.util.Date;
 @AllArgsConstructor
 public class House {
 
-	private Integer id;
+	private long id;
 
-	private Integer unitId;
+	private long unitId;
 
 	private String name;
 
-	private Integer code;
+	private long code;
 
 	private Date createTime;
 

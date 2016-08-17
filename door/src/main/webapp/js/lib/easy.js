@@ -8,7 +8,10 @@
 
 	$.extend($.messager.defaults, {top: 100});
 
+	$.extend($.fn.accordion.defaults, {multiple: true});
+
 	$.extend($.fn.datagrid.defaults, {
+		fit: true,
 		fitColumns: true,
 		striped: true,
 		pagination: true,
@@ -21,6 +24,7 @@
 		method: "POST",
 		valueField: "id",
 		textField: "name",
+		required: true,
 		panelWidth: 180
 	});
 })(jQuery);

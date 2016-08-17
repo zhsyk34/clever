@@ -11,18 +11,22 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Unit {
+public class Status {
 
 	private long id;
 
-	private long buildId;
+	private String udid;//lock-udid
 
-	private String name;
+	private int locked;//关闭
 
-	private long code;
+	private int upLock;//上提反锁
 
-	private Date createTime;
+	private int backLock;//室内反锁
 
-	private Date updateTime;
+	private int voltage;//实际数据应/10
+
+	private Date time;
+
+	private int online;
 
 }

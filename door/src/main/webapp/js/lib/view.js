@@ -16,7 +16,9 @@
 			before: function () {
 			},
 			dialogOption: null,//弹窗配置项
-			beforeOpenAdd: null,//弹出新增窗口前
+			beforeOpenAdd: function () {//弹出新增窗口前
+				$("input[name=id]").val(0);
+			},
 			beforeOpenMod: null,//弹出修改窗口前
 
 			gridOption: null,//表单配置项
@@ -72,7 +74,7 @@
 						return;
 					}
 					$form.form("load", rows[0]);
-					typeof options.beforeOpenMod === "function" && options.beforeOpenMod();//before
+					typeof options.beforeOpenMod === "function" && options.beforeOpenMod(rows[0]);//before
 					$editor.dialog({title: $.message.mod}).dialog("open");
 				}
 			}, {

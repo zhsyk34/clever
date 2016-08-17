@@ -11,19 +11,19 @@ public interface UnitService {
 
 	int update(Unit unit);
 
-	int delete(int[] ids);
+	int delete(long[] ids);
 
-	Unit find(int code);
+	Unit find(long code);
 
-	List<Unit> findList(Integer buildId, String name, int pageNo, int pageSize);
+	List<Unit> findList(Long buildId, String name, int pageNo, int pageSize);
 
 	List<Map> findList(String build, String unit, int pageNo, int pageSize);
 
 	int count(String build, String unit);
 
-	boolean exist(Integer id, int code);
+	boolean exist(long id, long code);
 
-	boolean relate(int id);
+	boolean relate(long id);
 
-	boolean relate(int[] ids);
+	boolean relate(long[] ids);
 }

@@ -11,11 +11,11 @@ import java.util.Date;
 @ToString
 public class Build {
 
-	private Integer id;
+	private long id;
 
 	private String name;
 
-	private Integer code;
+	private long code;
 
 	private Date createTime;
 

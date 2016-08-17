@@ -19,21 +19,24 @@ $(function () {
 
 	$.base({
 		urls: {
-			find: "house/find",
-			save: "house/save",
-			remove: "house/delete",
-			exist: "house/exist"
+			find: "gateway/find",
+			save: "gateway/save",
+			remove: "gateway/delete",
+			exist: null
 		},
 		gridOption: {
-			title: "房屋列表",
+			title: "网关列表",
 			columns: [[
 				{field: "", checkbox: true},
 				{field: "id", title: "id", width: 5},
-				{field: "build", title: "所属楼栋", width: 15},
-				{field: "unit", title: "所属单元", width: 15},
-				{field: "name", title: "房屋名称", width: 15},
-				{field: "createTime", title: "createTime", width: 20},
-				{field: "updateTime", title: "updateTime", width: 20}
+				{field: "build", title: "所属楼栋", width: 10},
+				{field: "unit", title: "所属单元", width: 10},
+				{field: "name", title: "网关名称", width: 10},
+				{field: "ip", title: "内网IP", width: 10},
+				{field: "remote", title: "外网IP", width: 10},
+				{field: "port", title: "端口号", width: 10},
+				{field: "createTime", title: "创建时间", width: 15},
+				{field: "updateTime", title: "修改时间", width: 15}
 			]]
 		},
 		before: function () {
@@ -47,13 +50,7 @@ $(function () {
 			return {
 				build: $.trim($("#search-build").val()),
 				unit: $.trim($("#search-unit").val()),
-				house: $.trim($("#search-house").val()),
-			};
-		},
-		existParam: function () {
-			return {
-				id: parseInt($("input[name=id]").val()) || 0,
-				code: parseInt($("input[name=code]").val())
+				name: $.trim($("#search-name").val())
 			};
 		}
 	});

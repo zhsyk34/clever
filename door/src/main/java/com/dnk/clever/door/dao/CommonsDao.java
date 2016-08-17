@@ -11,17 +11,17 @@ interface CommonsDao<Entity> {
 
 	int saves(Collection<Entity> entities);
 
-	int deleteById(int id);
+	int deleteById(long id);
 
 	int deleteByEntity(Entity entity);
 
-	int deleteByIds(int[] ids);
+	int deleteByIds(long[] ids);
 
 	int deleteByEntities(Collection<Entity> entities);
 
 	int update(Entity entity);
 
-	Entity findById(int id);
+	Entity findById(long id);
 
 	List<Entity> findAll();
 

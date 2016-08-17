@@ -27,18 +27,18 @@ public class HouseServiceImpl implements HouseService {
 	}
 
 	@Override
-	public int delete(int[] ids) {
+	public int delete(long[] ids) {
 		return houseDao.deleteByIds(ids);
 	}
 
 	@Override
-	public House find(int code) {
+	public House find(long code) {
 		List<House> list = houseDao.findList(null, null, code, -1, -1);
 		return CollectionUtils.isEmpty(list) ? null : list.get(0);
 	}
 
 	@Override
-	public List<House> findList(Integer unitId, String name, int pageNo, int pageSize) {
+	public List<House> findList(Long unitId, String name, int pageNo, int pageSize) {
 		return houseDao.findList(unitId, name, null, (pageNo - 1) * pageSize, pageSize);
 	}
 
@@ -53,20 +53,20 @@ public class HouseServiceImpl implements HouseService {
 	}
 
 	@Override
-	public boolean exist(Integer id, int code) {
+	public boolean exist(long id, long code) {
 		House house = this.find(code);
-		return house != null && !house.getId().equals(id);
+		return house != null && house.getId() != id;
 	}
 
 	//TODO locks
 	@Override
-	public boolean relate(int id) {
+	public boolean relate(long id) {
 		return false;
 	}
 
 	@Override
-	public boolean relate(int[] ids) {
-		for (int id : ids) {
+	public boolean relate(long[] ids) {
+		for (long id : ids) {
 			if (this.relate(id)) {
 				return true;
 			}

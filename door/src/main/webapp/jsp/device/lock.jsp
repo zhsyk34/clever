@@ -2,8 +2,8 @@
 <html>
 <head>
 	<%@ include file="/jsp/commons/commons.jsp" %>
-	<title>unit</title>
-	<script src="js/unit.js"></script>
+	<title>lock</title>
+	<script src="js/lock.js"></script>
 </head>
 <body>
 <div>
@@ -15,6 +15,10 @@
 				<td><input id="search-build" class="easyui-textbox"></td>
 				<td>单元名称:</td>
 				<td><input id="search-unit" class="easyui-textbox"></td>
+				<td>房屋名称:</td>
+				<td><input id="search-house" class="easyui-textbox"></td>
+				<td>门锁名称:</td>
+				<td><input id="search-name" class="easyui-textbox"></td>
 				<td><a id="search" class="easyui-linkbutton" iconCls="icon-search">查询</a></td>
 				<td><a id="clear" class="easyui-linkbutton" iconCls="icon-clear">重置</a></td>
 			</tr>
@@ -28,22 +32,27 @@
 		<form id="form" method="post">
 			<table>
 				<tr>
-					<td>id:</td>
-					<td><input name="id" type="text"></td>
-				</tr>
-				<tr>
 					<td>所属楼栋:</td>
 					<td>
-						<input id="selector" type="text" name="buildId">
+						<input name="id" type="hidden">
+						<input id="build-selector" type="text" name="buildId">
 					</td>
 				</tr>
 				<tr>
-					<td>单元名称:</td>
-					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true,validType:'length[1,30]'"></td>
+					<td>所属单元:</td>
+					<td>
+						<input id="unit-selector" type="text" name="unitId">
+					</td>
 				</tr>
 				<tr>
-					<td>单元编号:</td>
-					<td><input class="easyui-numberbox" type="text" name="code" data-options="required:true,min:1"></td>
+					<td>所属房屋:</td>
+					<td>
+						<input id="house-selector" type="text" name="houseId">
+					</td>
+				</tr>
+				<tr>
+					<td>门锁名称:</td>
+					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true,validType:'length[1,30]'"></td>
 				</tr>
 			</table>
 		</form>

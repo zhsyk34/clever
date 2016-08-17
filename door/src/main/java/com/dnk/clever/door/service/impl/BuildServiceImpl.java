@@ -29,12 +29,12 @@ public class BuildServiceImpl implements BuildService {
 	}
 
 	@Override
-	public int delete(int[] ids) {
+	public int delete(long[] ids) {
 		return buildDao.deleteByIds(ids);
 	}
 
 	@Override
-	public Build find(int code) {
+	public Build find(long code) {
 		List<Build> list = buildDao.findList(null, code, -1, -1);
 		return CollectionUtils.isEmpty(list) ? null : list.get(0);
 	}
@@ -50,19 +50,19 @@ public class BuildServiceImpl implements BuildService {
 	}
 
 	@Override
-	public boolean exist(Integer id, int code) {
+	public boolean exist(long id, long code) {
 		Build build = this.find(code);
-		return build != null && !build.getId().equals(id);
+		return build != null && build.getId() != id;
 	}
 
 	@Override
-	public boolean relate(int id) {
+	public boolean relate(long id) {
 		return !CollectionUtils.isEmpty(unitDao.findList(id, null, null, -1, -1));
 	}
 
 	@Override
-	public boolean relate(int[] ids) {
-		for (int id : ids) {
+	public boolean relate(long[] ids) {
+		for (long id : ids) {
 			if (this.relate(id)) {
 				return true;
 			}

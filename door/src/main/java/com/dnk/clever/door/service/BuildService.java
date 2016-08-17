@@ -10,17 +10,17 @@ public interface BuildService {
 
 	int update(Build build);
 
-	int delete(int[] ids);
+	int delete(long[] ids);
 
-	Build find(int code);
+	Build find(long code);
 
 	List<Build> findList(String name, int pageNo, int pageSize);
 
 	int count(String name);
 
-	boolean exist(Integer id, int code);
+	boolean exist(long id, long code);
 
-	boolean relate(int id);
+	boolean relate(long id);
 
-	boolean relate(int[] ids);
+	boolean relate(long[] ids);
 }

@@ -11,6 +11,8 @@
 
 gateway-lock(id,gatewayId,lockId)==>1:n
 
+
+record(id,devName,devNo,devSn,type,action);
 gateway-record
 
 lock-record
