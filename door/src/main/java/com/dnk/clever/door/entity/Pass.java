@@ -1,5 +1,6 @@
 package com.dnk.clever.door.entity;
 
+import com.dnk.clever.door.entity.dict.PassType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,28 +12,17 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Gateway {
+public class Pass {
 
 	private long id;
 
-	private long unitId;
+	private long userId;
 
-	private String sn;//识别码,出厂设置
+	private long lockId;//TODO lock-uuid,houseId,houseName?
 
-	private String udid;//sn加密
+	private PassType type;
 
-	private String name;
-
-	private String ip;
-
-	private int port;
-
-	private String remote;
-
-	private String version;
-
-	/*二维码*/
-	private String qrCode;
+	private int number;
 
 	private Date createTime;
 

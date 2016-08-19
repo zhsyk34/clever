@@ -3,7 +3,7 @@
 <mapper namespace="com.dnk.clever.door.dao.LockDao">
 	<sql id="entity">locks</sql>
 	<sql id="id">id</sql>
-	<sql id="column">id, houseId, uuid, name, area, device, createTime, updateTime</sql>
+	<sql id="column">id, gatewayId, houseId, uuid, name, area, device, createTime, updateTime</sql>
 	<sql id="page">
 		<if test="offset >= 0 and limit > 0">
 			limit #{offset}, #{limit}
@@ -14,6 +14,7 @@
 		JOIN house ON locks.houseId = house.id
 		JOIN unit ON house.unitId = unit.id
 		JOIN build ON unit.buildId = build.id
+		JOIN gateway ON unit.gatewayId = gateway.id
 		<where>
 			<if test="build != null and build != ''">
 				build.name LIKE "%"#{build}"%"
@@ -35,7 +36,7 @@
 		<include refid="entity"/>
 		(<include refid="column"/>)
 		VALUES
-		(NULL, #{houseId}, UUID(), #{name}, #{area}, #{device}, NULL, NULL)
+		(NULL, #{gatewayId}, #{houseId}, UUID(), #{name}, #{area}, #{device}, NULL, NULL)
 	</insert>
 
 	<insert id="saves">
@@ -44,7 +45,7 @@
 		(<include refid="column"/>)
 		VALUES
 		<foreach collection="list" item="entity" separator=",">
-			(NULL, #{entity.houseId}, UUID(), #{entity.name}, #{entity.area}, #{entity.device}, NULL, NULL)
+			(NULL, #{entity.gatewayId}, #{entity.houseId}, UUID(), #{entity.name}, #{entity.area}, #{entity.device}, NULL, NULL)
 		</foreach>
 	</insert>
 
@@ -90,7 +91,7 @@
 		UPDATE
 		<include refid="entity"/>
 		SET
-		houseId = #{houseId}, name = #{name}, area = #{area}, device = #{device}, updateTime = CURRENT_TIMESTAMP
+		gatewayId = #{gatewayId}, houseId = #{houseId}, name = #{name}, area = #{area}, device = #{device}, updateTime = CURRENT_TIMESTAMP
 		WHERE
 		<include refid="id"/>
 		= #{id}
@@ -130,6 +131,9 @@
 		SELECT * FROM
 		<include refid="entity"/>
 		<where>
+			<if test="gatewayId != null and gatewayId > 0">
+				gatewayId = #{gatewayId}
+			</if>
 			<if test="houseId != null and houseId > 0">
 				houseId = #{houseId}
 			</if>
@@ -146,9 +150,10 @@
 		<include refid="page"/>
 	</select>
 
+	<!--TODO-->
 	<select id="findMap" resultType="map">
 		SELECT
-		locks.*, house.name as house, unit.id as unitId, unit.name as unit, build.id as buildId, build.name as build
+		locks.*, house.name as house, unit.id as unitId, unit.name as unit, build.id as buildId, build.name as build, gateway
 		FROM
 		<include refid="search"/>
 		ORDER BY

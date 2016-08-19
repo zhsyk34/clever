@@ -32,6 +32,7 @@ $(function () {
 				{field: "build", title: "所属楼栋", width: 10},
 				{field: "unit", title: "所属单元", width: 10},
 				{field: "name", title: "网关名称", width: 10},
+				{field: "sn", title: "序列号", width: 10},
 				{field: "ip", title: "内网IP", width: 10},
 				{field: "remote", title: "外网IP", width: 10},
 				{field: "port", title: "端口号", width: 10},
@@ -42,9 +43,14 @@ $(function () {
 		before: function () {
 			initCombo();
 		},
+		beforeOpenAdd: function () {
+			$("#id").val(0);
+			$("#udid").textbox("readonly", false);
+		},
 		beforeOpenMod: function (row) {
 			$("#build-selector").combobox("setValue", row.buildId).combobox("setText", row.build);
 			$("#unit-selector").combobox("setValue", row.unitId).combobox("setText", row.unit);
+			$("#udid").textbox("readonly", true);
 		},
 		findParams: function () {
 			return {

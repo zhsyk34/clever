@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.Date;
 
 /**
- * 脱机记录(锁上保留记录)
+ * 脱机记录(锁上保留记录),格式同record
  */
 @Getter
 @Setter
@@ -20,17 +20,15 @@ public class LocalRecord {
 
 	private long id;
 
-	private Action action;//指令
+	private String uuid;
 
-	private String udid;//lock-udid
-
-	private String name;//lock-name
+	private Action action;
 
 	private ActionType type;
 
-	private int key;//指纹/密码 id
+	private int number;
 
-	private String description;//指令描述
+	private String description;
 
 	private Date eventTime;
 

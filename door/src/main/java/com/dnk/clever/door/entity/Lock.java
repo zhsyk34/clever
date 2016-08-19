@@ -21,9 +21,9 @@ public class Lock {
 
 	private String name;
 
-	private int area;
+	private int area;//区域号
 
-	private int device;
+	private int device;//设备号
 
 	private Date createTime;
 

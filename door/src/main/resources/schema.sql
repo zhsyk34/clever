@@ -55,12 +55,12 @@ CREATE TABLE house (
 CREATE TABLE gateway (
   id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   unitId     BIGINT UNSIGNED NOT NULL,
-  udid       VARCHAR(30)     NOT NULL,
+  sn         VARCHAR(30)     NOT NULL, /*加密成udid前的序列号*/
+  udid       VARCHAR(40)     NOT NULL,
   name       VARCHAR(30)     NOT NULL,
-  /*coordinate VARCHAR(30) NOT NULL,*//*通过unit_id可追溯 build-unit*/
   ip         VARCHAR(40)     NOT NULL,
   port       INT UNSIGNED    NOT NULL,
-  remote     VARCHAR(30)     NOT NULL,
+  remote     VARCHAR(40)     NOT NULL,
   version    VARCHAR(30),
   qrCode     VARCHAR(50),
   createTime TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -73,8 +73,9 @@ CREATE TABLE gateway (
 
 CREATE TABLE locks (
   id         BIGINT UNSIGNED  NOT NULL AUTO_INCREMENT,
+  gatewayId  BIGINT UNSIGNED  NOT NULL,
   houseId    BIGINT UNSIGNED  NOT NULL,
-  uuid       VARCHAR(30)      NOT NULL,
+  uuid       VARCHAR(36)      NOT NULL, /*uuid()方法自动生成*/
   name       VARCHAR(30)      NOT NULL,
   area       TINYINT UNSIGNED NOT NULL,
   device     TINYINT UNSIGNED NOT NULL,
@@ -86,15 +87,44 @@ CREATE TABLE locks (
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = UTF8;
 
-CREATE TABLE locks (
-  id         INT              NOT NULL AUTO_INCREMENT,
-  houseId    INT              NOT NULL,
-  uuid       VARCHAR(36)      NOT NULL,
-  name       VARCHAR(30)      NOT NULL,
-  areaNo     TINYINT UNSIGNED NOT NULL,
-  devNo      TINYINT UNSIGNED NOT NULL,
-  createTime TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updateTime TIMESTAMP,
+CREATE TABLE record (
+  id          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  uuid        VARCHAR(36)     NOT NULL,
+  action      VARCHAR(30)     NOT NULL,
+  type        VARCHAR(20)     NOT NULL,
+  number      TINYINT UNSIGNED,
+  description VARCHAR(50)     NOT NULL,
+  eventTime   TIMESTAMP       NOT NULL,
+  createTime  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = UTF8;
+
+CREATE TABLE localrecord (
+  id          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  uuid        VARCHAR(36)     NOT NULL,
+  action      VARCHAR(30)     NOT NULL,
+  type        VARCHAR(20)     NOT NULL,
+  number      TINYINT UNSIGNED,
+  description VARCHAR(50)     NOT NULL,
+  eventTime   TIMESTAMP       NOT NULL,
+  createTime  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = UTF8;
+
+CREATE TABLE status (
+  id       BIGINT UNSIGNED  NOT NULL AUTO_INCREMENT,
+  uuid     VARCHAR(36)      NOT NULL,
+  locked   TINYINT UNSIGNED NOT NULL,
+  upLock   TINYINT UNSIGNED NOT NULL,
+  backLock TINYINT UNSIGNED NOT NULL,
+  voltage  INT UNSIGNED     NOT NULL,
+  time     TIMESTAMP        NOT NULL,
   PRIMARY KEY (id)
 )
   ENGINE = InnoDB

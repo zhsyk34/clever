@@ -13,6 +13,8 @@ public interface GatewayService {
 
 	int delete(long[] ids);
 
+	Gateway find(long unitId);
+
 	Gateway find(String udid);
 
 	List<Gateway> findList(Long unitId, String udid, String name, int pageNo, int pageSize);

@@ -18,6 +18,8 @@ public class GatewayServiceImpl implements GatewayService {
 
 	@Override
 	public int save(Gateway gateway) {
+		//TODO findSNByUdid();
+		gateway.setSn("0-0-0-0");//FIXME
 		return gatewayDao.save(gateway);
 	}
 
@@ -29,6 +31,12 @@ public class GatewayServiceImpl implements GatewayService {
 	@Override
 	public int delete(long[] ids) {
 		return gatewayDao.deleteByIds(ids);
+	}
+
+	@Override
+	public Gateway find(long unitId) {
+		List<Gateway> list = gatewayDao.findList(unitId, null, null, -1, -1);
+		return CollectionUtils.isEmpty(list) ? null : list.get(0);
 	}
 
 	@Override

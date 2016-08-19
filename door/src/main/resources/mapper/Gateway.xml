@@ -3,7 +3,7 @@
 <mapper namespace="com.dnk.clever.door.dao.GatewayDao">
 	<sql id="entity">gateway</sql>
 	<sql id="id">id</sql>
-	<sql id="column">id, unitId, udid, name, ip, port, remote, version, qrCode, createTime, updateTime</sql>
+	<sql id="column">id, unitId, sn, udid, name, ip, port, remote, version, qrCode, createTime, updateTime</sql>
 	<sql id="page">
 		<if test="offset >= 0 and limit > 0">
 			limit #{offset}, #{limit}
@@ -31,7 +31,7 @@
 		<include refid="entity"/>
 		(<include refid="column"/>)
 		VALUES
-		(NULL, #{unitId}, #{udid}, #{name}, #{ip}, #{port}, #{remote}, #{version}, #{qrCode}, NULL, NULL)
+		(NULL, #{unitId}, #{sn}, #{udid}, #{name}, #{ip}, #{port}, #{remote}, #{version}, #{qrCode}, NULL, NULL)
 	</insert>
 
 	<insert id="saves">
@@ -40,7 +40,7 @@
 		(<include refid="column"/>)
 		VALUES
 		<foreach collection="list" item="entity" separator=",">
-			(NULL, #{entity.unitId}, #{entity.udid}, #{entity.name}, #{entity.ip}, #{entity.port}, #{entity.remote}, #{entity.version}, #{entity.qrCode}, NULL, NULL)
+			(NULL, #{entity.unitId}, #{entity.sn}, #{entity.udid}, #{entity.name}, #{entity.ip}, #{entity.port}, #{entity.remote}, #{entity.version}, #{entity.qrCode}, NULL, NULL)
 		</foreach>
 	</insert>
 
@@ -86,7 +86,7 @@
 		UPDATE
 		<include refid="entity"/>
 		SET
-		unitId = #{unitId}, udid = #{udid}, name = #{name}, ip = #{ip}, port = #{port}, remote = #{remote}, version = #{version}, qrCode = #{qrCode}, updateTime = CURRENT_TIMESTAMP
+		unitId = #{unitId}, name = #{name}, ip = #{ip}, port = #{port}, remote = #{remote}, version = #{version}, qrCode = #{qrCode}, updateTime = CURRENT_TIMESTAMP
 		WHERE
 		<include refid="id"/>
 		= #{id}

@@ -12,7 +12,7 @@
 
 	<div id="footer" data-options="region:'south'">footer</div>
 
-	<div id="nav" data-options="region:'west',split:true">
+	<div id="toolbar" data-options="region:'west',split:true">
 		<%--accordion--%>
 		<div id="accordion" class="easyui-accordion" data-options="multiple:true,border:false">
 			<div title="module-1" style="height:auto;">

@@ -1,7 +1,10 @@
 package com.dnk.clever.door.service.impl;
 
+import com.dnk.clever.door.dao.GatewayDao;
 import com.dnk.clever.door.dao.HouseDao;
 import com.dnk.clever.door.dao.UnitDao;
+import com.dnk.clever.door.entity.Gateway;
+import com.dnk.clever.door.entity.House;
 import com.dnk.clever.door.entity.Unit;
 import com.dnk.clever.door.service.UnitService;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ public class UnitServiceImpl implements UnitService {
 	private UnitDao unitDao;
 	@Resource
 	private HouseDao houseDao;
+	@Resource
+	private GatewayDao gatewayDao;
 
 	@Override
 	public int save(Unit unit) {
@@ -61,10 +66,14 @@ public class UnitServiceImpl implements UnitService {
 		return unit != null && unit.getId() != id;
 	}
 
-	//TODO gateway
 	@Override
 	public boolean relate(long id) {
-		return !CollectionUtils.isEmpty(houseDao.findList(id, null, null, -1, -1));
+		List<House> houses = houseDao.findList(id, null, null, -1, -1);
+		if (!CollectionUtils.isEmpty(houses)) {
+			return true;
+		}
+		List<Gateway> gateways = gatewayDao.findList(id, null, null, -1, -1);
+		return !CollectionUtils.isEmpty(gateways);
 	}
 
 	@Override

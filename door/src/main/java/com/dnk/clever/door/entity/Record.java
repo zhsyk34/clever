@@ -17,15 +17,13 @@ public class Record {
 
 	private long id;
 
+	private String uuid;//lock-uuid
+
 	private Action action;//指令
-
-	private String udid;//lock-udid
-
-	private String name;//lock-name
 
 	private ActionType type;
 
-	private int key;//指纹/密码 id
+	private int number;//指纹或密码 id
 
 	private String description;//指令描述
 

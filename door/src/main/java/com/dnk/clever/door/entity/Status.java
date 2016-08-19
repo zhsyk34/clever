@@ -15,7 +15,7 @@ public class Status {
 
 	private long id;
 
-	private String udid;//lock-udid
+	private String uuid;
 
 	private int locked;//关闭
 
@@ -25,8 +25,8 @@ public class Status {
 
 	private int voltage;//实际数据应/10
 
-	private Date time;
-
 	private int online;
+
+	private Date time;
 
 }

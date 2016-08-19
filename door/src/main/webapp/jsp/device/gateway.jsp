@@ -32,7 +32,7 @@
 				<tr>
 					<td>所属楼栋:</td>
 					<td>
-						<input name="id" type="hidden">
+						<input id="id" name="id" type="text">
 						<input id="build-selector" type="text" name="buildId">
 					</td>
 				</tr>
@@ -48,7 +48,7 @@
 				</tr>
 				<tr>
 					<td>识 别 码:</td>
-					<td><input class="easyui-textbox" type="text" name="udid" data-options="required:true,validType:'length[1,40]'"></td>
+					<td><input id="udid" class="easyui-textbox" type="text" name="udid" data-options="required:true,validType:'length[1,40]'"></td>
 				</tr>
 				<tr>
 					<td>内网IP:</td>
@@ -68,3 +68,4 @@
 </div>
 </body>
 </html>
+\

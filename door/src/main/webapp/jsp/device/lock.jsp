@@ -34,25 +34,37 @@
 				<tr>
 					<td>所属楼栋:</td>
 					<td>
-						<input name="id" type="hidden">
-						<input id="build-selector" type="text" name="buildId">
+						<input id="id" name="id" type="hidden">
+						<input id="build-selector" name="buildId">
 					</td>
 				</tr>
 				<tr>
 					<td>所属单元:</td>
 					<td>
-						<input id="unit-selector" type="text" name="unitId">
+						<input id="unit-selector" name="unitId">
 					</td>
 				</tr>
 				<tr>
 					<td>所属房屋:</td>
 					<td>
-						<input id="house-selector" type="text" name="houseId">
+						<input id="house-selector" name="houseId">
 					</td>
 				</tr>
 				<tr>
 					<td>门锁名称:</td>
-					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true,validType:'length[1,30]'"></td>
+					<td><input class="easyui-textbox" name="name" data-options="required:true,validType:'length[1,30]'"></td>
+				</tr>
+				<%--<tr>
+					<td>识 别 码:</td>
+					<td><input id="uuid" class="easyui-textbox" name="uuid" data-options="required:true,validType:'length[36,36]'"></td>
+				</tr>--%>
+				<tr>
+					<td>区 域 号:</td>
+					<td><input class="easyui-numberbox" name="area" data-options="required:true,min:1"></td>
+				</tr>
+				<tr>
+					<td>设 备 号:</td>
+					<td><input class="easyui-numberbox" name="device" data-options="required:true,min:1"></td>
 				</tr>
 			</table>
 		</form>
